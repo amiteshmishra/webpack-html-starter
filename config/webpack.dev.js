@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 
-var commonConfig = require('./webpack.common.js');
+var commonConfig = require('./webpack.common');
 
 const ENV = process.env.BUILD_DEV = process.env.NODE_ENV = process.env.ENV = 'dev';
 

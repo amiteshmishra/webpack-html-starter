@@ -1,7 +1,9 @@
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpackMerge = require('webpack-merge');
 
-module.exports = {
+var pagesConfig = require('./webpack.pages');
+
+module.exports = webpackMerge(pagesConfig, {
 
   entry: {
     'vendor': './app/vendor.js',
@@ -16,11 +18,33 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loaders: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        loaders: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'resolve-url',
+          'postcss-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.pcss$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        loader: 'url-loader?limit=10000'
       }
     ]
   },
@@ -30,13 +54,6 @@ module.exports = {
     require('postcss-cssnext')({
       browsers: ['ie >= 8', 'last 2 versions']
     })
-  ],
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: './app/index.html'
-    })
   ]
 
-};
+});

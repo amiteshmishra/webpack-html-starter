@@ -1,3 +1,11 @@
+## Usage
+
+`Git clone` this repo or download it.
+
+Place your styles in `main.pcss` or `main.scss` (`@import` is enable).
+
+Place index/ejs files in `./app` directory, but do not forget add config to `./config/webpack.pages.js`.
+
 ## Build
 
 `npm run build:dev`
@@ -5,9 +13,7 @@
 ## Dev
 
 `npm run serve`
-Open in browser 127.0.0.1:9999
 
-## ToDo
+Open in browser http://localhost:9999
 
-[ ] More info in Readme
-[ ] Deploy to gh-pages
+
