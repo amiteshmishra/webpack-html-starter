@@ -14,7 +14,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'templated.html',
       template: './app/templated.ejs',
-      title: 'TEMPLATED PAGE',
+      title: 'TEMPLATED PAGE'
     })
   ]
 

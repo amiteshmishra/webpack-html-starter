@@ -2,6 +2,8 @@
 
 `Git clone` this repo or download it.
 
+Run `npm install`
+
 Place your styles in `main.pcss` or `main.scss` (`@import` is enable).
 
 Place index/ejs files in `./app` directory, but do not forget add config to `./config/webpack.pages.js`.
