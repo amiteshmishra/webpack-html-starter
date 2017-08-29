@@ -1,5 +1,6 @@
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const path = require('path');
 
 var commonConfig = require('./webpack.common');
 
@@ -8,7 +9,7 @@ const ENV = process.env.BUILD_DEV = process.env.NODE_ENV = process.env.ENV = 'de
 module.exports = webpackMerge(commonConfig, {
 
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, './dist'),
     publicPath: '',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js'

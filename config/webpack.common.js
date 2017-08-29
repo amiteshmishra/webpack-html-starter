@@ -3,57 +3,50 @@ var webpackMerge = require('webpack-merge');
 
 var pagesConfig = require('./webpack.pages');
 
-module.exports = webpackMerge(pagesConfig, {
+const postcssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    plugins: (loader) => [
+      require('postcss-import')(),
+      require('postcss-cssnext')({
+        browsers: ['ie >= 8', 'last 2 versions']
+      }),
+    ],
+  },
+};
 
+module.exports = webpackMerge(pagesConfig, {
   entry: {
     'vendor': './app/vendor.js',
     'app': './app/main.js'
   },
-
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.html$/,
-        loader: 'html'
-      },
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?importLoaders=1',
-          'postcss-loader'
-        ]
+        use: ['html-loader']
       },
       {
         test: /\.scss$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader?importLoaders=1',
-          'resolve-url',
-          'postcss-loader',
+          postcssLoader,
           'sass-loader'
-        ]
+        ],
       },
       {
         test: /\.pcss$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader',
-          'postcss-loader'
+          postcssLoader,
         ]
       },
       {
         test: /\.(jpg|png|gif|svg)$/,
-        loader: 'url-loader?limit=10000'
+        use: ['url-loader?limit=10000']
       }
     ]
-  },
-
-  postcss: [
-    require('postcss-import')(),
-    require('postcss-cssnext')({
-      browsers: ['ie >= 8', 'last 2 versions']
-    })
-  ]
-
+  }
 });
