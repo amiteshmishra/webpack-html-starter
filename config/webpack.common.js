@@ -1,8 +1,7 @@
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-
-var pagesConfig = require('./webpack.pages');
-
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const pagesConfig = require('./webpack.pages');
 const postcssLoader = {
   loader: 'postcss-loader',
   options: {
@@ -14,7 +13,6 @@ const postcssLoader = {
     ],
   },
 };
-
 module.exports = webpackMerge(pagesConfig, {
   entry: {
     'vendor': './app/vendor.js',
@@ -28,25 +26,22 @@ module.exports = webpackMerge(pagesConfig, {
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader?importLoaders=1',
-          postcssLoader,
-          'sass-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            'css-loader?importLoaders=1',
+            postcssLoader,
+            'sass-loader'
+          ]
+        }),
       },
       {
-        test: /\.pcss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          postcssLoader,
-        ]
-      },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
+        test: /\.(jpg|png|gif|svg|otf|woff|woff2)$/,
         use: ['url-loader?limit=10000']
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin("styles.css"),
+  ]
 });
