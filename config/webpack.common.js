@@ -15,8 +15,7 @@ const postcssLoader = {
 };
 module.exports = webpackMerge(pagesConfig, {
   entry: {
-    'vendor': './app/vendor.js',
-    'app': './app/main.js'
+    'styles': './app/css/main.scss',
   },
   module: {
     rules: [
@@ -32,16 +31,21 @@ module.exports = webpackMerge(pagesConfig, {
             'css-loader?importLoaders=1',
             postcssLoader,
             'sass-loader'
-          ]
+          ],
+          publicPath: '../',
         }),
       },
       {
-        test: /\.(jpg|png|gif|svg|otf|woff|woff2)$/,
-        use: ['url-loader?limit=10000']
+        test: /\.(jpg|png|gif|svg)$/,
+        use: ['url-loader?limit=1&name=assets/images/[hash].[ext]']
+      },
+      {
+        test: /\.(otf|ttf|woff|woff2)$/,
+        use: ['url-loader?limit=1&name=assets/fonts/[name].[ext]']
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin("./styles/[name].css"),
   ]
 });
